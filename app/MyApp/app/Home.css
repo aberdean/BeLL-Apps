@@ -1,4 +1,7 @@
 /*This stylesheet is supposed to applied on page for LTR languages like English, Spanish etc*/
+.body {
+	direction: ltr;
+}
 /*input::-moz-focus-inner {
     border: 0;
     padding: 0;
@@ -965,4 +968,10 @@ margin-top: 20px;
 .popupAlign > a {
     margin-right: 2%;
     cursor: pointer;
+}
+.correct {
+	color: green;
+}
+.wrong {
+	color: red;
 }

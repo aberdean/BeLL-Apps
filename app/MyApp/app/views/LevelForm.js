@@ -61,13 +61,41 @@ $(function() {
                                 var sids = m.get("stepsIds")
                                 var sresults = m.get("stepsResult")
                                 var sstatus = m.get("stepsStatus")
-                                sids.push(that.model.get("id"))
-                                sresults.push("0")
-                                sstatus.push("0")
-                                m.set("stepsIds", sids)
-                                m.set("stepsResult", sresults)
-                                m.set("stepsStatus", sstatus)
-                                m.save()
+                                var pqattempts = m.get("pqAttempts");
+                                if(sids.indexOf(that.model.get("id")) < 0)
+                                {
+                                    sids.push(that.model.get("id"))
+                                    if(that.model.get("outComes").length == 2) {
+                                        var arr = [];
+                                        var arr1 = [];
+                                        var pqarr = [];
+                                        arr.push("")
+                                        arr.push("")
+                                        arr1.push("0");
+                                        arr1.push("0");
+                                        pqarr.push(0)
+                                        pqarr.push(0)
+                                        sresults.push(arr)
+                                        sstatus.push(arr1)
+                                        if(pqattempts != undefined) {
+                                            pqattempts.push( pqarr)
+                                        }
+
+                                    } else {
+                                        sresults.push("")
+                                        sstatus.push("0")
+                                        if(pqattempts != undefined) {
+                                            pqattempts.push(0);
+                                        }
+                                    }
+                                    m.set("stepsIds", sids)
+                                    m.set("stepsResult", sresults)
+                                    m.set("stepsStatus", sstatus)
+                                    if(pqattempts != undefined) {
+                                        m.set("pqAttempts", pqattempts)
+                                    }
+                                    m.save()
+                                }
                             })
                         }
                     })
@@ -79,6 +107,47 @@ $(function() {
                         })
                     }
                 } else {
+                    var allcrs = new App.Collections.StepResultsbyCourse()
+                    allcrs.courseId = that.model.get("courseId")
+                    allcrs.fetch({
+                        success: function() {
+                            allcrs.each(function(m) {
+                                var sids = m.get("stepsIds")
+                                var sresults = m.get("stepsResult")
+                                var sstatus = m.get("stepsStatus")
+                                var pqattempts = m.get("pqAttempts");
+                                var stepIndex = sids.indexOf(that.model.get("id"))
+                                if(that.model.get("outComes").length == 2) {
+                                    var arr = [];
+                                    var arr1 = [];
+                                    var pqarr = [];
+                                    arr.push("")
+                                    arr.push("")
+                                    arr1.push("0");
+                                    arr1.push("0");
+                                    pqarr.push(0)
+                                    pqarr.push(0)
+                                    sresults[stepIndex] = arr;
+                                    sstatus[stepIndex] = arr1;
+                                    if(pqattempts != undefined) {
+                                        pqattempts[stepIndex] = pqarr;
+                                    }
+                                } else {
+                                    sresults[stepIndex] = "";
+                                    sstatus[stepIndex] = '0';
+                                    if(pqattempts != undefined) {
+                                        pqattempts[stepIndex] = 0;
+                                    }
+                                }
+                                m.set("stepsResult", sresults)
+                                m.set("stepsStatus", sstatus)
+                                if(pqattempts != undefined) {
+                                    m.set("pqAttempts", pqattempts)
+                                }
+                                m.save()
+                            })
+                        }
+                    })
                     Backbone.history.navigate('level/view/' + id + '/' + rid, {
                         trigger: true
                     })
@@ -93,8 +162,9 @@ $(function() {
             else if (this.model.get("description") == undefined || $.trim(this.model.get("description"))  == "") {
                 alert(App.languageDict.attributes.Description_Error)
             }
-           /* else if (this.model.get("allowedErrors") == undefined || $.trim(this.model.get("allowedErrors"))  == "" || isNaN(this.model.get("allowedErrors"))) {
-                alert(App.languageDict.attributes.Invalid_AllowedErrors)}*/
+            else if (this.model.get("outComes") == undefined || this.model.get("outComes").length == 0) {
+                alert("Please select outcomes")
+            }
              else if (isNaN(this.model.get("step"))) {
                 alert(App.languageDict.attributes.InvalidStepNumber)
             } else {

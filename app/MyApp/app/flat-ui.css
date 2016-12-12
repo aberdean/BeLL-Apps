@@ -513,6 +513,12 @@ address {
 .btn.btn-info {
   background-color: #3498db;
 }
+.btn.btn-credit {
+    background-color: #3498db;
+}
+.btn.btn-open {
+    background-color: #3498db;
+}
 .btn.btn-info:hover,
 .btn.btn-info:focus,
 .btn-group:focus .btn.btn-info.dropdown-toggle {
@@ -688,7 +694,7 @@ address {
 }
 .navbar {
   font-size: 16px;
-  border-radius: 6px;
+  border-radius: 0px;
   background: #eceef0;
   border: none;
 }

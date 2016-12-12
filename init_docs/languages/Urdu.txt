@@ -401,7 +401,7 @@
    "Error_UserCourse_Details": "متعلقہ کورس کے لئے کوائف موجود نہیں",
    "Take_Quiz": "ٹیسٹ دیں",
    "Exit": "خروج",
-   "PaperForStep": "مرحلہ نمبر کے لئےپیپر",
+   "DownloadPaperForStep":"Download Paper for step number",
    "Error_Course_Report": "سرور پر ڈیٹا نہیں ملا",
    "You_Scored": "آپ نے سکوربنائے",
    "Finish": "ختم کریں",
@@ -553,6 +553,7 @@
    "UnAuthorized_Login": "آپ سائن ان کرنے کے مجاز نہیں ہیں",
    "Status": "حالت",
    "Synced_Success": "کامیابی سے مطابقت پذیر ہو گۓ ہیں",
+   "Check_Sync": "Update status",
    "Already_Pub_Sent": "اس اشاعت کو پہلے ہی بھیج دیا ہے",
    "Prompt_Community_First": "براہ کرم برادری کو پہلے منتخب کریں",
    "AddCourse_To_pubs_Failed": "کورس کو اشاعت میں شامل کرنے میں ناکامی ہے",
@@ -669,7 +670,7 @@
    "Sender": "مرسل",
    "request_Accepted_already": "آپ نے یہ درخواست قبول کر لی ہے ۔",
    "Adm_req_accepted": "داخلہ کی درخواست قبول کر لی ہے",
-   "adm_req_For": "آپ کے داخلہ کی درخواست کورس کے رہنما نے قبول کرلی ہے",
+   "adm_req_For_accepted": "آپ کے داخلہ کی درخواست کورس کے رہنما نے قبول کرلی ہے",
    "Survey_No": "سروے نمبر",
    "Actions": "افعال",
    "Submitted": "ارسال کیے گیے",
@@ -841,5 +842,6 @@
   "Resource_Success_Added": "Resource is Successfully added to library",
   "Community_Resources": "Resources From Community",
   "Local_Resources": "Local Resources",
-  "Pending_Resources": "Pending Resources"
+ "Pending_Resources": "Pending Resources",
+  "Confirm_Course":"Are you sure you want to delete this Course?"
 }

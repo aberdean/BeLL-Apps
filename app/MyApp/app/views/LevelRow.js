@@ -6,8 +6,6 @@ $(function() {
 
         events: {
             "click .destroyStep": function(e) {
-                this.trigger('levelDeleted')
-                e.preventDefault()
                 var that = this
                 var courses = new App.Collections.StepResultsbyCourse()
                 courses.courseId = this.model.get("courseId")
@@ -17,17 +15,26 @@ $(function() {
                             var stepids = m.get("stepsIds")
                             var stepres = m.get("stepsResult")
                             var stepstatus = m.get("stepsStatus")
+                            var sattempts = [];
+                            if(m.get("pqAttempts")){
+                                sattempts = m.get("pqAttempts")
+                            }
                             var index = stepids.indexOf(that.model.get("_id"))
                             stepids.splice(index, 1)
                             stepres.splice(index, 1)
                             stepstatus.splice(index, 1)
+                            if(sattempts.length > 0) {
+                                sattempts.splice(index, 1)
+                            }
                             m.set("stepsIds", stepids)
                             m.set("stepsResult", stepres)
                             m.set("stepsStatus", stepstatus)
-
+                            if( m.get("pqAttempts")) {
+                                m.set("pqAttempts", sattempts)
+                            }
                             m.save({
                                 success: function() {
-                                    
+
                                 }
                             })
                         })
@@ -35,6 +42,7 @@ $(function() {
                 })
                 this.model.destroy()
                 this.remove()
+                this.trigger('levelDeleted')
 
             },
             "click .browse": function(e) {

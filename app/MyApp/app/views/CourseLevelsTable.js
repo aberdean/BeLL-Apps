@@ -43,6 +43,7 @@ $(function () {
         },
 
         quiz: function (e) {
+            $.cookie("sectionNo", $.url().attr('fragment').split('/')[2] + '/' + $("#accordion").accordion("option", "active"));
             var context=this
             var id = e.currentTarget.value
             step = new App.Models.CourseStep({
@@ -121,8 +122,20 @@ $(function () {
                 this.vars.status = App.languageDict.attributes.Error
                 this.vars.marks =  App.languageDict.attributes.Error
             } else {
-                this.vars.status = sstatus[index]
+                var tempStatus = [];
+
+                if(sstatus[index].length > 1) {
+                    var paper = filterInt(sstatus[index][0])
+                    var quiz = filterInt(sstatus[index][1])
+                    tempStatus.push(paper);
+                    tempStatus.push(quiz);
+                    this.vars.status = tempStatus
+                    this.vars.marks = sr[index]
+                } else {
+                this.vars.status = filterInt(sstatus[index])
                 this.vars.marks = sr[index]
+                }
+
                 this.vars.index = index
             }
             var attachmentNames = new Array()
@@ -182,9 +195,12 @@ $(function () {
             while (PassedSteps < totalSteps && sstatus[PassedSteps] != '0') {
                 PassedSteps++
             }
-
             context.addAll()
+            if(!$.cookie("sectionNo") || $.url().attr('fragment').split('/')[2] != $.cookie("sectionNo").split('/')[0]) {
+                $.cookie("sectionNo", $.url().attr('fragment').split('/')[2] + '/' + 0)
+            }
             $("#accordion").accordion({
+                active: parseInt($.cookie("sectionNo").split('/')[1]),
                 header: "h3",
                 heightStyle: "content"
             }).sortable({

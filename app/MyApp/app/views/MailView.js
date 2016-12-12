@@ -131,18 +131,44 @@ $(function() {
                                 var stepsids = new Array()
                                 var stepsres = new Array()
                                 var stepsstatus = new Array()
+                                var pqattempts = new Array();
                                 csteps.courseId = gmodel.get("_id")
                                 csteps.fetch({
                                     success: function() {
                                         csteps.each(function(m) {
+                                            //Issue#400
+                                            var sresults = [];
+                                            var sstatus = [];
+                                            var sattempts = [];
+                                            if(m.get("outComes").length == 2) {
+                                                var arr = [];
+                                                var arr1 = [];
+                                                var pqarr = [];
+                                                pqarr.push(0)
+                                                pqarr.push(0)
+                                                arr.push("0")
+                                                arr.push("0")
+                                                arr1.push("")
+                                                arr1.push("")
+                                                sresults = arr1;
+                                                sstatus = arr;
+                                                sattempts = pqarr;
+                                            } else {
+                                                sresults = "";
+                                                sstatus= '0';
+                                                sattempts = 0
+                                            }
+
                                             stepsids.push(m.get("_id"))
-                                            stepsres.push("0")
-                                            stepsstatus.push("0")
+                                            stepsres.push(sresults)
+                                            stepsstatus.push(sstatus)
+                                            pqattempts.push(sattempts)
                                         })
                                         memprogress.set("stepsIds", stepsids)
                                         memprogress.set("memberId", $.cookie("Member._id"))
                                         memprogress.set("stepsResult", stepsres)
                                         memprogress.set("stepsStatus", stepsstatus)
+                                        memprogress.set("pqAttempts", pqattempts)
                                         memprogress.set("courseId", csteps.courseId)
                                         memprogress.save({
                                             success: function() {}
@@ -422,7 +448,7 @@ $(function() {
             course.fetch({
                 async: false
             })
-////////////////////////////////////////
+
             memebersEnrolled = course.attributes.members
             var isAlreadyEnrolled = false;
             console.log(memebersEnrolled)
@@ -448,11 +474,9 @@ $(function() {
                 alert("Member is already enrolled in this course");
                 var body = mailView.inViewModel.get('body').replace(/<(?:.|\n)*?>/gm, '')
                 body = firstName + ' ' +'is already enrolled in '+' ' + course.attributes.CourseTitle;
-                ///////
 
             }
             else {
-                /////////////////////////////////////////////
 
                 var memId = mailView.inViewModel.get('senderId')
                 course.get('members').push(memId)
@@ -464,18 +488,45 @@ $(function() {
                         var stepsids = new Array()
                         var stepsres = new Array()
                         var stepsstatus = new Array()
+                        var pqattempts = new Array();
                         csteps.courseId = idRev.id
                         csteps.fetch({
                             success: function () {
                                 csteps.each(function (m) {
+
+                                  //Issue#400
+                                    var sresults = [];
+                                    var sstatus = [];
+                                    var sattempts = [];
+                                    if(m.get("outComes").length == 2) {
+                                        var arr = [];
+                                        var arr1 = [];
+                                        var pqarr = [];
+                                        pqarr.push(0)
+                                        pqarr.push(0)
+                                        arr.push("0")
+                                        arr.push("0")
+                                        arr1.push("")
+                                        arr1.push("")
+                                        sresults = arr1;
+                                        sstatus = arr;
+                                        sattempts = pqarr;
+                                    } else {
+                                        sresults = "";
+                                        sstatus= '0';
+                                        sattempts = 0;
+                                    }
+
                                     stepsids.push(m.get("_id"))
-                                    stepsres.push("0")
-                                    stepsstatus.push("0")
+                                    stepsres.push(sresults)
+                                    stepsstatus.push(sstatus)
+                                    pqattempts.push(sattempts)
                                 })
                                 memprogress.set("stepsIds", stepsids)
                                 memprogress.set("memberId", memId)
                                 memprogress.set("stepsResult", stepsres)
                                 memprogress.set("stepsStatus", stepsstatus)
+                                memprogress.set("pqAttempts", pqattempts)
                                 memprogress.set("courseId", csteps.courseId)
                                 memprogress.save({
                                     success: function () {
@@ -503,7 +554,7 @@ $(function() {
                 mail.set("senderId", $.cookie('Member._id'));
                 mail.set("receiverId", mailView.inViewModel.get('senderId'));
                 mail.set("subject", App.languageDict.attributes.Adm_req_accepted + " | " + course.get('name'));
-                mail.set("body", App.languageDict.attributes.adm_req_For_rejected + " \"" + course.get('name') + "\" ");
+                mail.set("body", App.languageDict.attributes.adm_req_For_accepted + " \"" + course.get('name') + "\" ");
                 mail.set("status", "0");
                 mail.set("type", "mail");
                 mail.set("sentDate", currentdate);
