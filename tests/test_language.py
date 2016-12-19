@@ -1,8 +1,12 @@
 import unittest
+<<<<<<< 6c795ba6cbfe46ed330ac6b6ead791a6d9d5804d
 <<<<<<< 9370bb07444c3c00757f17fb06f0ae5c87b22fcc
 import bell
 =======
 >>>>>>> need fixing dropdown menu
+=======
+import bell
+>>>>>>> update url call
 
 from base_case import on_platforms
 from base_case import browsers
@@ -27,7 +31,7 @@ class LanguageTest(BaseCase):
         
         # go to homepage
         driver.get(bell.get_url())
-
+        
         # test all languages
         languages = ["Arabic", "English", "Spanish", "Urdu"]
         logins = ["دخول", "Login", "Iniciar sesión", "لاگ ان"]
