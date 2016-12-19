@@ -1,5 +1,8 @@
 import unittest
+<<<<<<< 9370bb07444c3c00757f17fb06f0ae5c87b22fcc
 import bell
+=======
+>>>>>>> need fixing dropdown menu
 
 from base_case import on_platforms
 from base_case import browsers
@@ -24,14 +27,15 @@ class LanguageTest(BaseCase):
         
         # go to homepage
         driver.get(bell.get_url())
+
         # test all languages
         languages = ["Arabic", "English", "Spanish", "Urdu"]
         logins = ["دخول", "Login", "Iniciar sesión", "لاگ ان"]
         
+
         for language, login in zip(languages, logins):
             dropdown = Select(driver.find_element_by_id("onLoginLanguage"))
             dropdown.select_by_value(language)
-            
             sleep(10)
             WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.XPATH, "//*[contains(@id, 'login')]"))) 
             
